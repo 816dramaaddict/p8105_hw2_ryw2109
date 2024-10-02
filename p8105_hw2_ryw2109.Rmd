@@ -5,14 +5,24 @@ date: "2024-10-02"
 output: github_document
 ---
 
-### Question 1
+### Question 0
 ```{r libraries, echo = FALSE, message = FALSE, warning = FALSE}
 library(tidyverse)
 library(readxl) # Needed to import excel files
 ```
 
 ```{r importing_data}
+# Question 1 dataset
+transit_df = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
+transit_df
+
+# Question 2 dataset
 trash_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx")
 trash_df
+```
+
+### Question 1
+```{r}
+
 ```
 
