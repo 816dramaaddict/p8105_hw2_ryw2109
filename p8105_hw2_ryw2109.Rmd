@@ -11,7 +11,7 @@ library(tidyverse)
 library(readxl) # Needed to import excel files
 ```
 
-```{r importing_data}
+```{r importing_data, echo = FALSE, message = FALSE, warning = FALSE}
 # Question 1 dataset
 transit_df = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
 transit_df
@@ -19,6 +19,16 @@ transit_df
 # Question 2 dataset
 trash_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx")
 trash_df
+
+# Question 3 dataset
+bakers_df = read_csv("./data/gbb_datasets/bakers.csv")
+bakers_df
+
+bakes_df = read_csv("./data/gbb_datasets/bakes.csv")
+bakes_df
+
+results_df = read_csv("./data/gbb_datasets/results.csv")
+results_df
 ```
 
 ### Question 1
