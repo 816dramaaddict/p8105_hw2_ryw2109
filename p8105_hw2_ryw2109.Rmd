@@ -165,3 +165,5 @@ baking_merge = select(baking_merge, baker, baker_last_name, baker_age, baker_occ
 
 write_csv(baking_merge, "./data/Q3_data_file_name.csv")
 ```
+
+The data was cleaned first by importing and reviewing the dataset. The first and last names of the brokers were separated in the bakers file as the other two files only consisted of the first name. anti_join was used to cross check between the different files to see if there were potential rows that would not merge together. Once those discrepancy rows were found, the data were changed to prevent the discrepancy. With merging, the columns were rearranged to display the baker's information, series, episode, cooking information, and results from the competition.
