@@ -13,26 +13,57 @@ library(readxl) # Needed to import excel files
 
 ```{r importing_data, echo = FALSE, message = FALSE, warning = FALSE}
 # Question 1 dataset
-transit_df = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
+transit_df = read_csv(file = "./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>% 
+  janitor::clean_names()
 transit_df
 
 # Question 2 dataset
-trash_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx")
+trash_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx")%>% 
+  janitor::clean_names()
 trash_df
 
 # Question 3 dataset
-bakers_df = read_csv("./data/gbb_datasets/bakers.csv")
+bakers_df = read_csv("./data/gbb_datasets/bakers.csv")%>% 
+  janitor::clean_names()
 bakers_df
 
-bakes_df = read_csv("./data/gbb_datasets/bakes.csv")
+bakes_df = read_csv("./data/gbb_datasets/bakes.csv")%>% 
+  janitor::clean_names()
 bakes_df
 
-results_df = read_csv("./data/gbb_datasets/results.csv")
+results_df = read_csv("./data/gbb_datasets/results.csv")%>% 
+  janitor::clean_names()
 results_df
 ```
 
 ### Question 1
 ```{r}
+transit_df = read_csv(file = "./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%  #import data
+  janitor::clean_names() %>%  #clean column name
+  select(line, station_name, station_latitude, station_longitude, route1 : route11, entry, vending, entrance_type, ada) %>% #retain the columns desired
+  mutate(entry = 
+    ifelse(entry == "Yes", TRUE, FALSE
+    )
+          )
+transit_df
+
 
 ```
+Write a short paragraph about this dataset – explain briefly what variables the dataset contains, describe your data cleaning steps so far, and give the dimension (rows x columns) of the resulting dataset. Are these data tidy?
 
+How many distinct stations are there? Note that stations are identified both by name and by line (e.g. 125th St 8th Avenue; 125st Broadway; 125st Lenox); the distinct function may be useful here.
+
+How many stations are ADA compliant?
+
+What proportion of station entrances / exits without vending allow entrance?
+
+Reformat data so that route number and route name are distinct variables.
+
+How many distinct stations serve the A train? Of the stations that serve the A train, how many are ADA compliant?
+
+### Question 2
+```{r}
+
+
+
+```
