@@ -120,8 +120,9 @@ gwynnda_trash_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx",
     wheel = "gwynnda_trash"
   )
   
-
 ```
+
+Unfortunately the dataset is not importing correctly.
 
 ### Question 3
 ```{r Q3}
@@ -163,7 +164,10 @@ baking_merge = left_join(bakers_bakes, results_df, by = c("series", "baker", "ep
 #Rearrange columns
 baking_merge = select(baking_merge, baker, baker_last_name, baker_age, baker_occupation, hometown, series, episode, signature_bake, show_stopper, technical, result)
 
+#Exporting dataset
 write_csv(baking_merge, "./data/Q3_data_file_name.csv")
+
+
 ```
 
 The data was cleaned first by importing and reviewing the dataset. The first and last names of the brokers were separated in the bakers file as the other two files only consisted of the first name. anti_join was used to cross check between the different files to see if there were potential rows that would not merge together. Once those discrepancy rows were found, the data were changed to prevent the discrepancy. With merging, the columns were rearranged to display the baker's information, series, episode, cooking information, and results from the competition.
