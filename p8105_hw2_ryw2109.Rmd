@@ -148,23 +148,20 @@ resulting_anti = anti_join(bakers_df, results_df) # 1 baker discrepancy between 
   #Looking over the results table, we see there is a Joanne that makes that information --> Jo most likely is Joanne
 
  #Changes Jo to Joanne
-bakers_df = mutate(bakers_df, baker = case_match(
-  baker, "Jo" ~ "Joanne")
-  )
+bakers_df = mutate(bakers_df, baker = ifelse(baker == "Jo", "Joanne", baker))
 
-bakes_df = mutate(bakes_df, baker = case_match(
-  baker, "Jo" ~ "Joanne")
-  )
+bakes_df = mutate(bakes_df, baker = ifelse(baker == "Jo", "Joanne", baker))
 
-results_df = mutate(results_df, baker = case_match(
-  baker, "Jo" ~ "Joanne")
-  )
+results_df = mutate(results_df, baker = ifelse(baker == "Jo", "Joanne", baker))
 
 #Merging bakers with bakes first
-bakers_bakes = left_join(bakers_df, bakes_df, by = c("series", "baker"))
+bakers_bakes = left_join(bakes_df, bakers_df, by = c("series", "baker"))
 
 #Merging bakers and bakes with results next
-baking_merge = left_join(bakers_df, results_df, by = c("series", "baker"))
+baking_merge = left_join(bakers_bakes, results_df, by = c("series", "baker", "episode"))
 
+#Rearrange columns
+baking_merge = select(baking_merge, baker, baker_last_name, baker_age, baker_occupation, hometown, series, episode, signature_bake, show_stopper, technical, result)
 
+write_csv(baking_merge, "./data/Q3_data_file_name.csv")
 ```
