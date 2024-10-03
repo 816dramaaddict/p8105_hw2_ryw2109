@@ -125,17 +125,46 @@ gwynnda_trash_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx",
 
 ### Question 3
 ```{r Q3}
+#Importing data
 bakers_df = read_csv("./data/gbb_datasets/bakers.csv")%>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  separate(
+    baker_name, into = c("baker", "baker_last_name"), sep = " "
+  ) %>% 
+  arrange(series)
 bakers_df
 
 bakes_df = read_csv("./data/gbb_datasets/bakes.csv")%>% 
   janitor::clean_names()
 bakes_df
 
-results_df = read_csv("./data/gbb_datasets/results.csv")%>% 
-  janitor::clean_names()
+results_df = read_csv("./data/gbb_datasets/results.csv", skip = 2) %>% 
+  janitor::clean_names() 
 results_df
+
+#completeness / correctness across datasets
+bakers_anti = anti_join(bakers_df, bakes_df, by = c("baker", "series")) #25 bakers discrepancy between bakers_df and bakes_df
+resulting_anti = anti_join(bakers_df, results_df) # 1 baker discrepancy between bakers_df and results_df -- Jo Wheatley with series 2 and age 41
+  #Looking over the results table, we see there is a Joanne that makes that information --> Jo most likely is Joanne
+
+ #Changes Jo to Joanne
+bakers_df = mutate(bakers_df, baker = case_match(
+  baker, "Jo" ~ "Joanne")
+  )
+
+bakes_df = mutate(bakes_df, baker = case_match(
+  baker, "Jo" ~ "Joanne")
+  )
+
+results_df = mutate(results_df, baker = case_match(
+  baker, "Jo" ~ "Joanne")
+  )
+
+#Merging bakers with bakes first
+bakers_bakes = left_join(bakers_df, bakes_df, by = c("series", "baker"))
+
+#Merging bakers and bakes with results next
+baking_merge = left_join(bakers_df, results_df, by = c("series", "baker"))
 
 
 ```
