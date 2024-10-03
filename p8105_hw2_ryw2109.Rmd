@@ -11,26 +11,6 @@ library(tidyverse)
 library(readxl) # Needed to import excel files
 ```
 
-```{r importing_data, echo = FALSE, message = FALSE, warning = FALSE}
-# Question 2 dataset
-trash_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx")%>% 
-  janitor::clean_names()
-trash_df
-
-# Question 3 dataset
-bakers_df = read_csv("./data/gbb_datasets/bakers.csv")%>% 
-  janitor::clean_names()
-bakers_df
-
-bakes_df = read_csv("./data/gbb_datasets/bakes.csv")%>% 
-  janitor::clean_names()
-bakes_df
-
-results_df = read_csv("./data/gbb_datasets/results.csv")%>% 
-  janitor::clean_names()
-results_df
-```
-
 ### Question 1
 ```{r Q1}
 transit_df = read_csv(file = "./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%  #import data
@@ -98,7 +78,7 @@ distinct_serving_a_station_ada = filter(reformatted_transit_df, train_route == "
   nrow() %>% 
   print()
 ```
-After cleaning the data set, there is now a total of `r nrow(transit_df)` rows and `r ncol(transit_df)` columns. The dataset contains 19 columns which includes the train line, station name, latitue and longitude of the train station, 11 train routes, if an entry exists, if there is vending, type of entrance and if the train station is ADA compliant. The data set is not tidy as it could be tider; for example, routes 1 through 11 could be tidier using pivot_long.
+After cleaning the data set, there is now a total of `r nrow(transit_df)` rows and `r ncol(transit_df)` columns. The dataset contains 19 columns which includes the train line, station name, latitue and longitude of the train station, 11 train routes, if an entry exists, if there is vending, type of entrance and if the train station is ADA compliant. I cleaned the data set by dropping unneeded columns, and changing data types for better analysis. The data set is not tidy as it could be tider; for example, routes 1 through 11 could be tidier using pivot_long. 
 
 There are a total of `r distinct_station` distinct stations.
 
@@ -111,8 +91,51 @@ There are a total of `r distinct_serving_a_station` distinct stations that serve
 Of the distinct stations that serve the A train, `r distinct_serving_a_station_ada` are ADA compliant.
 
 ### Question 2
-```{r}
+```{r Q2}
+mr_trash_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx", 
+  sheet = "Mr. Trash Wheel", 
+  range = "A2:N653") %>% #omit non-data entries
+  janitor::clean_names() %>% #reasonable variable names
+  filter(dumpster == "") %>% #omit rows that do not include dumpster-specific data
+  mutate(
+    sports_balls = as.integer(sports_balls),
+    wheel = "mr_trash"
+  )
 
+prof_trash_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx", 
+  sheet = "Professor Trash Wheel", 
+  range = "A2:M120") %>% #omit non-data entries
+  janitor::clean_names() %>% #reasonable variable names
+  filter(dumpster == "") %>% #omit rows that do not include dumpster-specific data
+  mutate(
+    wheel = "prof_trash"
+  )
+
+gwynnda_trash_df = read_excel("./data/202409 Trash Wheel Collection Data.xlsx", 
+  sheet = "Gwynnda Trash Wheel", 
+  range = "A2:L265") %>% #omit non-data entries
+  janitor::clean_names() %>% #reasonable variable names
+  filter(dumpster == "") %>% #omit rows that do not include dumpster-specific data
+  mutate(
+    wheel = "gwynnda_trash"
+  )
+  
+
+```
+
+### Question 3
+```{r Q3}
+bakers_df = read_csv("./data/gbb_datasets/bakers.csv")%>% 
+  janitor::clean_names()
+bakers_df
+
+bakes_df = read_csv("./data/gbb_datasets/bakes.csv")%>% 
+  janitor::clean_names()
+bakes_df
+
+results_df = read_csv("./data/gbb_datasets/results.csv")%>% 
+  janitor::clean_names()
+results_df
 
 
 ```
